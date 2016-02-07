@@ -95,8 +95,8 @@ GuiPage_HomeTwoItems.start = function(title1, url1, title2, url2,selectedItem,to
 		//Set PageContent
 		document.getElementById("pageContent").innerHTML = "<div id=bannerSelection class='guiDisplay_Series-Banner'></div>" +
 				"<div id=Center class='HomeOneCenter'>" + 
-				"<p style='font-size:1.4em;padding-left:11px;'>"+title1+"</p><div id='TopRow' style='margin-bottom:50px'><div id=Content></div></div>" +
-				"<p style='font-size:1.4em;padding-left:11px;'>"+title2+"</p><div id='BottomRow'><div id=Content2></div></div>" +
+				"<p style='position:relative;font-size:1.4em;padding-left:11px;z-index:5;'>"+title1+"</p><div id='TopRow' style='margin-bottom:50px'><div id=Content></div></div>" +
+				"<p style='position:relative;font-size:1.4em;padding-left:11px;z-index:5;'>"+title2+"</p><div id='BottomRow'><div id=Content2></div></div>" +
 				"</div>";
 	
 		//Set isResume based on title - used in UpdateDisplayedItems
@@ -136,8 +136,20 @@ GuiPage_HomeTwoItems.start = function(title1, url1, title2, url2,selectedItem,to
 		var updateCounter2 = (isTop == true) ? true : false;
 		this.updateSelectedItems2(updateCounter2);
 		
-		//Set Background
-		Support.fadeImage("images/bg1.jpg"); 
+		//Function to generate random backdrop
+		this.backdropTimeout = setTimeout(function(){
+			var randomImageURL = Server.getItemTypeURL("&SortBy=Random&IncludeItemTypes=Series,Movie&Recursive=true&CollapseBoxSetItems=false&Limit=20");
+			var randomImageData = Server.getContent(randomImageURL);
+			if (randomImageData == null) { return; }
+			
+			for (var index = 0; index < randomImageData.Items.length; index++) {
+				if (randomImageData.Items[index ].BackdropImageTags.length > 0) {
+					var imgsrc = Server.getBackgroundImageURL(randomImageData.Items[index ].Id,"Backdrop",Main.width,Main.height,0,false,0,randomImageData.Items[index ].BackdropImageTags.length);
+					Support.fadeImage(imgsrc);
+					break;
+				}
+			}
+		}, 500);
 		
 	} else if (this.ItemData.Items.length > 0 && this.ItemData2.Items.length == 0) {
 		GuiPage_HomeOneItem.start(title1,url1,0,0);

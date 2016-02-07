@@ -28,6 +28,7 @@
 		<script src="app/javascript/Support/Sha1.js"></script>
 		<script src="app/javascript/Support/GuiHelper.js"></script>
 		<script src="app/javascript/Support/GuiNotifications.js"></script>
+		<script src="app/javascript/Support/polyfill.js"></script>
 		<script src="app/javascript/Support/ServerVersion.js"></script>
 		<script src="app/javascript/Support/srt-parser.js"></script>
 		<script src="app/javascript/Gui/GuiPage_NewServer.js"></script>
@@ -66,7 +67,6 @@
 		<script src="app/javascript/Gui/GuiPage_Playlist.js"></script>
 		<script src="app/javascript/Gui/GuiPage_AddToPlaylist.js"></script>
 		<script src="app/javascript/Gui/GuiPage_Search.js"></script>
-		<script src="app/javascript/Support/polyfill.js"></script>
 		<script src="app/javascript/Gui/GuiPage_TvChannel.js"></script>
 		
 		<object id="pluginPlayer" border=0 classid="clsid:SAMSUNG-INFOLINK-PLAYER"></object>
@@ -153,6 +153,7 @@
 			<div id="pageBackgroundHolder" class="pageBackground"></div>
 			<div id="pageBackground" class="pageBackground"></div>
 			<div id="pageBackgroundFade" class="pageBackgroundFade"></div>
+			<div id="itemBackgroundFade" class="itemBackgroundFade"></div>
 			
 			<!-- Main page content -->
 			<div id="page" class="page">
@@ -173,8 +174,7 @@
 				 <div id="guiPlayListResult"></div>
 				</div>
 				
-				<div id="guiDisplay_SeriesIndexing" class="guiDisplay_SeriesIndexing" style="visibility:hidden">
-				</div>
+				<div id="guiDisplay_SeriesIndexing" class="guiDisplay_SeriesIndexing" style="opacity:0"></div>
 				
 				<!--  Music Player -->
 				<div id="guiMusicPlayerDiv" class="guiMusicPlayerDiv" style="visibility:hidden">
@@ -201,6 +201,11 @@
 				<div id="guiBlueButton" class="BlueButton" style="visibility:hidden"></div>
 				<div id="guiReturnButton" class="ReturnButton" style="visibility:hidden"></div>	
 				
+				<div id="exitConfirm" class="exitConfirm">Are you sure you want exit Emby?
+					<div id="exitConfirmYes" class="exitConfirmYes">Yes</div>
+					<div id="exitConfirmNo" class="exitConfirmNo">No</div>
+				</div>	
+
 				<div id="guiLoading" class="videoLoading" style="visibility:hidden">Loading</div>
 				
 			</div>	
@@ -244,8 +249,10 @@
 	
 			<!--  Menu -->
 			<div id="menu" class="menu" style="visibility:hidden">
-				<div id="menuUserImage" class="menu-userImage"></div>
-				<div id="menuUserName" class="menu-userName"></div>
+				<div id="menuUserImageContainer" class="menu-UserImageContainer">
+					<div id="menuUserImage" class="menu-userImage"></div>
+				</div>
+				<div id="menuUserName" class="menu-userName"></div> 
 				<div id="menuItems"></div>	
 				<div id="menuVersion" class="menu-version"></div>	  
 			</div>
